@@ -16,6 +16,7 @@ import java.util.ArrayList;
  *
  * @author zGuindouOS
  */
+
 public class server {
 
     static private ArrayList<Socket> ClientList = new ArrayList<Socket>();
@@ -26,9 +27,12 @@ public class server {
         ServerSocket SerSock = new ServerSocket(8001);
         try {
             while (true) {
+
             	Socket sClient = SerSock.accept();
+
                 ClientList.add(sClient);
                 ClientNumber++;
+
                 Thread chat_th = new Thread(new Runnable() {
 
                     private void runChat() throws IOException {
@@ -37,30 +41,33 @@ public class server {
                             System.out.println("new client with " + ClientNumber + " like a number");
 
                             BufferedReader br = new BufferedReader(new InputStreamReader(sClient.getInputStream()));
-                            PrintWriter out = new PrintWriter(sClient.getOutputStream());
+                            PrintWriter out   = new PrintWriter(sClient.getOutputStream());
 
-                            out.println("Client " + ClientNumber + " : Accepted Conexion");
+                            out.println("\nClient " + ClientNumber + " : Accepted Conexion\n");
+                            out.flush();
+                            
                             String msg;
 
                             while (true) {
-
-                                do {
+                          		
+                                //do {
                                     msg = br.readLine();
-                                } while (msg != null);
+                                //} while (msg != null);
 
                                 if (msg != null) {
+                                	int nc = 1;
+                                    for (Socket so : ClientList) {
+                                        if (so == sClient) {
+                                            break;
+                                        } else {
+                                            nc++;
+                                        }
+                                    }
                                     for (Socket sock : ClientList) {
                                         if (sock != sClient) {
                                             PrintWriter outMsg = new PrintWriter(sock.getOutputStream());
-                                            int nc = 1;
-                                            for (Socket so : ClientList) {
-                                                if (so == sClient) {
-                                                    break;
-                                                } else {
-                                                    nc++;
-                                                }
-                                            }
                                             outMsg.println("Client " + nc + " : " + msg);
+                                            outMsg.flush();
                                         }
                                     }
                                 }

@@ -18,6 +18,7 @@ import java.util.logging.Logger;
  *
  * @author zGuindouOS
  */
+
 public class client {
 
     public static void main(String[] args) throws UnknownHostException, IOException {
@@ -34,13 +35,13 @@ public class client {
                 @Override
                 public void run() {
                     while (true) {
-                        do {
+                        //do {
                             try {
                                 msg = br.readLine();
                             } catch (IOException ex) {
                                 ex.printStackTrace();
                             }
-                        } while (msg != null);
+                        //} while (msg != null);
                         if (msg != null) {
                             System.out.println(msg);
                         }
@@ -52,6 +53,7 @@ public class client {
                 @Override
                 public void run() {
                     while (true) {
+                    	System.out.print("Client : ");
                         Scanner sc = new Scanner(System.in);
                         pw.println(sc.nextLine());
                     }
