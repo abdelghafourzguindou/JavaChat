@@ -49,24 +49,15 @@ public class server {
                             String msg;
 
                             while (true) {
-                          		
+
                                 //do {
                                     msg = br.readLine();
                                 //} while (msg != null);
 
-                                if (msg != null) {
-                                	int nc = 1;
-                                    for (Socket so : ClientList) {
-                                        if (so == sClient) {
-                                            break;
-                                        } else {
-                                            nc++;
-                                        }
-                                    }
                                     for (Socket sock : ClientList) {
                                         if (sock != sClient) {
                                             PrintWriter outMsg = new PrintWriter(sock.getOutputStream());
-                                            outMsg.println("Client " + nc + " : " + msg);
+                                            outMsg.println(msg);
                                             outMsg.flush();
                                         }
                                     }
