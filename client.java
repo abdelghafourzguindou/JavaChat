@@ -14,6 +14,10 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+
 /**
  *
  * @author zGuindouOS
@@ -26,34 +30,39 @@ public class client {
         Socket sock = new Socket("localhost", 8001);
         //try {
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-            PrintWriter pw    = new PrintWriter(sock.getOutputStream());
+            //BufferedReader br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+            //PrintWriter pw    = new PrintWriter(sock.getOutputStream());
+            
+            InputStream is          = sock.getInputStream(); 
+            InputStreamReader ipsr  = new InputStreamReader(is);
+            BufferedReader br       = new BufferedReader(ipsr);
+            OutputStream os         = sock.getOutputStream();
+            PrintWriter pw          = new PrintWriter(os,true);
            
             Thread Recepter = new Thread(new Runnable() {
+                
                 String msg;
 
-                @Override
+                //@Override
                 public void run() {
                     while (true) {
                         //do {
                             try {
                                 msg = br.readLine();
+                                if (msg != null) System.out.println(msg);
                             } catch (IOException ex) {
                                 ex.printStackTrace();
                             }
                         //} while (msg != null);
-                        if (msg != null) {
-                            System.out.println(msg);
-                        }
                     }
                 }
             });
 
             Thread Sender = new Thread(new Runnable() {
-                @Override
+                //@Override
                 public void run() {
                     while (true) {
-                    	System.out.print("Client : ");
+                    	System.out.print("You : ");
                         Scanner sc = new Scanner(System.in);
                         pw.println(sc.nextLine());
                     }

@@ -47,11 +47,15 @@ public class server {
                             out.flush();
                             
                             String msg;
+                            String str_cl = "Client " + Integer.toString(ClientNumber) + " : ";
+                            String str;
 
                             while (true) {
 
                                 //do {
-                                    msg = br.readLine();
+
+                                    str = br.readLine();
+                                    msg = str_cl + str;
                                 //} while (msg != null);
 
                                     for (Socket sock : ClientList) {
@@ -61,7 +65,7 @@ public class server {
                                             outMsg.flush();
                                         }
                                     }
-                                }
+                                //}
                             }
                         } finally {
                             sClient.close();
